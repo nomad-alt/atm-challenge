@@ -8,7 +8,9 @@ end
 def withdraw(amount, account)
   case
   when insufficient_funds_in_account?(amount, account)
-    return
+    { status: false, message: 'insufficient funds', date: Date.today }
+  when insufficient_funds_in_atm?(amount)
+    { status: false, message: 'insufficient funds in ATM', date: Date.today }
   else
   perform_transaction(amount, account)
 end
@@ -21,11 +23,12 @@ def insufficient_funds_in_account?(amount, account)
   end
 
   def perform_transaction(amount, account)
-    # We DEDUCT the amount from the Atm's funds
     @funds -= amount
-    # We also DEDUCT the amount from the accounts balance
     account.balance = account.balance - amount
-    # and we return a responce for a successfull withdraw.
     { status: true, message: 'success', date: Date.today, amount: amount }
   end
+
+  def insufficient_funds_in_atm?(amount)
+    @funds < amount
+end
 end
