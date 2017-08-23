@@ -58,7 +58,7 @@ class Atm
     Date.strptime(exp_date, '%m/%y') < Date.today
   end
 
-  def account_disabled?(status)
-    status != :active
+  def account_disabled?(account)
+    account != :active
   end
 end

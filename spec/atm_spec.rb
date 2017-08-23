@@ -39,8 +39,8 @@ it 'reject withdraw if card is expired' do
 end
 
 it 'reject withdraw if account is disabled' do
-  expected_output = { status: false, message: 'account is disabled', date: Date.today }
   allow(account).to receive(:status).and_return(:disabled)
+  expected_output = { status: false, message: 'account is disabled', date: Date.today }
   expect(subject.withdraw(100, '1234', account)).to eq expected_output
 end
 end
